@@ -1,14 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
 
 import App from './App'
-import { counter, addGUN, removeGUN } from './index.redux'
+import { counter, addGUN, removeGUN, addGUNAsync } from './index.redux'
 
-const store = createStore(counter)
+const store = createStore(counter, applyMiddleware(thunk))
 function render() {
     console.log(store.getState())
-    ReactDOM.render(<App store={store} addGUN={addGUN} removeGUN={removeGUN}/>, document.getElementById('root'))
+    ReactDOM.render(<App store={store} addGUNAsync={addGUNAsync} addGUN={addGUN} removeGUN={removeGUN}/>, document.getElementById('root'))
 }
 store.subscribe(render)
 render()
